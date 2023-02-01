@@ -1,0 +1,25 @@
+<nav id="navbar">
+  <ul>
+    <li
+      class="logotype"
+      routerLink="inicio"
+    >
+      <mat-icon svgIcon="logo" class="icon-logo"></mat-icon>
+      <a>Medimapp</a>
+    </li>
+    <li class="burger" (click)="toggleMenu()">
+      <i class="material-icons">{{ isMenuOpen ? "close" : "menu" }}</i>
+    </li>
+    <li class="menu" [class.is-open]="isMenuOpen">
+      <a class="menu-item"
+         *ngFor="let itemMenu of sideMenu"
+         [matTooltip]="isMenuOpen ? '' : itemMenu.toolTip"
+         [routerLink]="[itemMenu.route]">
+        <mat-icon class="icon-menu">
+          {{ itemMenu.icon }}
+        </mat-icon>
+        {{ itemMenu.name }}
+      </a>
+    </li>
+  </ul>
+</nav>
