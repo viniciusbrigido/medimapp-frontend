@@ -4,6 +4,8 @@ import {
   SocialAuthService, SocialUser
 } from '@abacritt/angularx-social-login';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UsuarioService } from '../../../../services/usuario.service';
+import { Usuario } from '../../../../model/usuario';
 
 @Component({
   selector: 'app-form-login',
@@ -18,7 +20,8 @@ export class FormLoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: SocialAuthService
+    private authService: SocialAuthService,
+    private usuarioService: UsuarioService
   ) { }
 
   ngOnInit(): void {
@@ -30,7 +33,23 @@ export class FormLoginComponent implements OnInit {
       this.socialUser = user;
       this.isLoggedin = user != null;
       console.log('this.socialUser', this.socialUser);
+      if (user) {
+        this.cadastraUsuario(user);
+      }
     });
+  }
+
+  private cadastraUsuario(user: SocialUser) {
+    const usuarioDto: Usuario =  {
+      nome: user.name,
+      email: user.email,
+      admin: false,
+      dataCriacao: new Date()
+    }
+
+    this.usuarioService.cadastrar(usuarioDto).subscribe((usuarioCadastrado) => {
+      console.log('usuarioCadastrado', usuarioCadastrado);
+    })
   }
 
   signInWithGoogle(): void {
