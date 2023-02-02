@@ -1,45 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   GoogleLoginProvider,
   SocialAuthService, SocialUser
 } from '@abacritt/angularx-social-login';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from '../../../../services/usuario.service';
 import { Usuario } from '../../../../model/usuario';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-login',
   templateUrl: './form-login.component.html',
   styleUrls: ['./form-login.component.css']
 })
-export class FormLoginComponent implements OnInit {
-
-  loginForm!: FormGroup;
-  socialUser!: SocialUser;
-  isLoggedin?: boolean;
+export class FormLoginComponent implements OnInit, OnDestroy {
 
   constructor(
-    private formBuilder: FormBuilder,
+    private router: Router,
     private authService: SocialAuthService,
     private usuarioService: UsuarioService
   ) { }
 
+  ngOnDestroy(): void {
+    this.signOut();
+    this.usuarioService.deslogar();
+  }
+
   ngOnInit(): void {
-    this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-    });
     this.authService.authState.subscribe((user) => {
-      this.socialUser = user;
-      this.isLoggedin = user != null;
-      console.log('this.socialUser', this.socialUser);
-      if (user) {
-        this.cadastraUsuario(user);
-      }
+      this.cadastraUsuario(user);
     });
   }
 
   private cadastraUsuario(user: SocialUser) {
+    if (!user) {
+      return;
+    }
     const usuarioDto: Usuario =  {
       nome: user.name,
       email: user.email,
@@ -48,7 +43,8 @@ export class FormLoginComponent implements OnInit {
     }
 
     this.usuarioService.cadastrar(usuarioDto).subscribe((usuarioCadastrado) => {
-      console.log('usuarioCadastrado', usuarioCadastrado);
+      sessionStorage.setItem('user', JSON.stringify(usuarioCadastrado));
+      this.router.navigate(['home']);
     })
   }
 

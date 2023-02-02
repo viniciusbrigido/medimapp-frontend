@@ -8,18 +8,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginModule } from './pages/login/login.module';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './pages/home/home.component';
 import { RouterOutlet } from '@angular/router';
 import {
   GoogleLoginProvider,
   SocialAuthServiceConfig,
   SocialLoginModule
 } from '@abacritt/angularx-social-login';
+import { UsuarioAutenticadoGuard } from './guards/usuario-autenticado.guard';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +32,7 @@ import {
     SocialLoginModule
   ],
   providers: [
+    UsuarioAutenticadoGuard,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

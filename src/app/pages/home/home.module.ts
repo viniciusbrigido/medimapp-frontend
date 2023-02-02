@@ -9,9 +9,11 @@ import { FarmaciaComponent } from './components/farmacia/farmacia.component';
 import { PrecoComponent } from './components/preco/preco.component';
 import { ContaComponent } from './components/conta/conta.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+import { HomeComponent } from './home.component';
 
 @NgModule({
   declarations: [
+    HomeComponent,
     HeaderComponent,
     FarmaciaComponent,
     PrecoComponent,
@@ -26,6 +28,6 @@ import { InicioComponent } from './components/inicio/inicio.component';
     HomeRoutingModule,
     MatTooltipModule,
     MatIconModule
-  ]
+  ],
 })
 export class HomeModule { }
