@@ -22,16 +22,16 @@ export class UsuarioService extends CrudService<Usuario> {
   }
 
   deslogar() {
-    sessionStorage.removeItem('user');
-    this.router.navigate(['login']);
+    localStorage.removeItem('user');
+    this.router.navigate(['home']);
   }
 
   get usuarioLogado() {
-    return sessionStorage.getItem('user');
+    return localStorage.getItem('user');
   }
 
   get logado(): boolean {
-    const logado = !!sessionStorage.getItem('user');
+    const logado = !!localStorage.getItem('user');
     console.log('logado', logado);
     return logado;
   }

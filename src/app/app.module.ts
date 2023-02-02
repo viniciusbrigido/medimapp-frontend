@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeModule } from './pages/home/home.module';
 import { AppRoutingModule } from './app-routing.module';
-import { LoginModule } from './pages/login/login.module';
 
 import { AppComponent } from './app.component';
 import { RouterOutlet } from '@angular/router';
@@ -14,7 +13,6 @@ import {
   SocialAuthServiceConfig,
   SocialLoginModule
 } from '@abacritt/angularx-social-login';
-import { UsuarioAutenticadoGuard } from './guards/usuario-autenticado.guard';
 
 @NgModule({
   declarations: [
@@ -26,13 +24,11 @@ import { UsuarioAutenticadoGuard } from './guards/usuario-autenticado.guard';
     ReactiveFormsModule,
     RouterOutlet,
     HomeModule,
-    LoginModule,
     AppRoutingModule,
     HttpClientModule,
     SocialLoginModule
   ],
   providers: [
-    UsuarioAutenticadoGuard,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

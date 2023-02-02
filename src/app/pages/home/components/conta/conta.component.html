@@ -1,1 +1,14 @@
-<p>conta works!</p>
+<div class="container" *ngIf="!isLogado">
+  <mat-card class="card">
+    <mat-card-content>
+      <mat-icon svgIcon="logo"></mat-icon>
+    </mat-card-content>
+    <mat-card-actions>
+      <asl-google-signin-button (click)="loga()" type="standard"></asl-google-signin-button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div *ngIf="isLogado">
+  <button (click)="deslogar()">Deslogar</button>
+</div>
